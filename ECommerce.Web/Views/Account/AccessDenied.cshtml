@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Security Clearance Denied";
+}
+
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="glass-panel p-5 border-danger" style="box-shadow: 0 0 40px rgba(239, 68, 68, 0.3);">
+                <i class="bi bi-shield-slash-fill text-danger display-2 mb-3 d-block"></i>
+                <h1 class="h3 font-display text-white mb-2">ACCESS RESTRICTED</h1>
+                <p class="text-secondary small mb-4">
+                    Your current credentials do not have Tier-1 clearance for this sector. This incident has been logged in the system audit stream.
+                </p>
+                <div class="d-flex justify-content-center gap-2">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-cyber-primary">
+                        Return to Safe Grid
+                    </a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-cyber-outline">
+                        Elevate Credentials
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

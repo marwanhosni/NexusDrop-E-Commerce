@@ -1,0 +1,171 @@
+@model ECommerce.Application.DTOs.CartDto
+@{
+    ViewData["Title"] = "Quantum Cart";
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-secondary">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Catalog" asp-action="Index" class="text-decoration-none text-secondary">Catalog</a></li>
+            <li class="breadcrumb-item active text-cyan" aria-current="page">Shopping Cart</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+        <div>
+            <h1 class="h2 font-display text-white mb-1">
+                <i class="bi bi-bag-check-fill text-cyan me-2"></i>QUANTUM CART
+            </h1>
+            <p class="text-secondary small mb-0">Review queued items before beam checkout</p>
+        </div>
+        @if (Model.Items.Any())
+        {
+            <form asp-controller="Cart" asp-action="Clear" method="post" onsubmit="return confirm('Clear all items from your cart?');">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-cyber-outline btn-sm text-danger border-danger">
+                    <i class="bi bi-trash3 me-1"></i> Clear Cart
+                </button>
+            </form>
+        }
+    </div>
+
+    @if (!Model.Items.Any())
+    {
+        <div class="glass-panel p-5 text-center my-4">
+            <i class="bi bi-cart-x text-purple fs-1 mb-3 d-block"></i>
+            <h3 class="h4 font-display text-white mb-2">YOUR CART BUFFER IS EMPTY</h3>
+            <p class="text-secondary small mb-4">No cyber merchandise has been queued into your cart yet.</p>
+            <a asp-controller="Catalog" asp-action="Index" class="btn btn-cyber-primary">
+                <i class="bi bi-lightning-charge-fill me-1"></i> Explore The Merchandise Grid
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            <!-- Items Table/Card List -->
+            <div class="col-lg-8">
+                <div class="glass-panel p-3 p-md-4 mb-4">
+                    <div class="table-responsive">
+                        <table class="table table-cyber mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="min-width: 250px;">Artifact</th>
+                                    <th scope="col" class="text-center">Price</th>
+                                    <th scope="col" class="text-center" style="min-width: 130px;">Quantity</th>
+                                    <th scope="col" class="text-end">Subtotal</th>
+                                    <th scope="col" class="text-center"><span class="visually-hidden">Action</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="glass-card p-2 text-center" style="width: 64px; height: 64px; border-radius: 10px; background: #0c0e17;">
+                                                    <img src="@item.ProductImageUrl" alt="@item.ProductName" class="w-100 h-100 object-fit-contain" />
+                                                </div>
+                                                <div>
+                                                    <a asp-controller="Catalog" asp-action="Details" asp-route-slug="@item.ProductSlug" class="text-white font-heading fw-bold text-decoration-none hover-cyan d-block">
+                                                        @item.ProductName
+                                                    </a>
+                                                    <span class="badge-cyber badge-cyber-purple small" style="font-size: 0.65rem;">@item.CategoryName</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center font-display fw-bold text-white">
+                                            $@item.UnitPrice.ToString("F2")
+                                        </td>
+                                        <td class="text-center">
+                                            <form asp-controller="Cart" asp-action="UpdateQuantity" method="post" class="d-inline-flex align-items-center gap-1">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="cartItemId" value="@item.Id" />
+                                                <div class="input-group input-group-sm" style="width: 105px;">
+                                                    <button type="submit" name="quantity" value="@(item.Quantity - 1)" class="btn btn-cyber-outline py-0 px-2">-</button>
+                                                    <input type="text" class="form-control form-control-cyber form-control-sm text-center font-display fw-bold p-0" value="@item.Quantity" readonly />
+                                                    <button type="submit" name="quantity" value="@(item.Quantity + 1)" class="btn btn-cyber-outline py-0 px-2" @(item.Quantity >= item.AvailableStock ? "disabled" : "")>+</button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td class="text-end font-display fw-bold text-cyan fs-6">
+                                            $@item.TotalPrice.ToString("F2")
+                                        </td>
+                                        <td class="text-center">
+                                            <form asp-controller="Cart" asp-action="RemoveItem" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="cartItemId" value="@item.Id" />
+                                                <button type="submit" class="btn btn-link text-danger p-0" title="Remove Artifact">
+                                                    <i class="bi bi-trash3 fs-6"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <a asp-controller="Catalog" asp-action="Index" class="btn btn-cyber-outline btn-sm d-inline-flex align-items-center gap-2">
+                        <i class="bi bi-arrow-left"></i> Continue Shopping
+                    </a>
+                    <span class="small text-muted font-heading">
+                        <i class="bi bi-shield-lock-fill text-cyan me-1"></i> 256-Bit SSL Quantum Encryption
+                    </span>
+                </div>
+            </div>
+
+            <!-- Order Summary Column -->
+            <div class="col-lg-4">
+                <div class="glass-panel p-4 position-sticky" style="top: 100px; border: 1px solid rgba(6, 182, 212, 0.4);">
+                    <h5 class="h6 font-display text-white mb-3 pb-2 border-bottom border-secondary border-opacity-25 text-uppercase" style="letter-spacing: 1px;">
+                        Order Manifest
+                    </h5>
+
+                    <div class="d-flex justify-content-between mb-2 small">
+                        <span class="text-secondary">Subtotal (@Model.TotalItemCount items)</span>
+                        <span class="text-white font-display fw-bold">$@Model.Subtotal.ToString("F2")</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2 small">
+                        <span class="text-secondary">Sub-Orbital Shipping</span>
+                        @if (Model.ShippingEstimate == 0)
+                        {
+                            <span class="text-cyan font-heading fw-bold">FREE (Tier 1)</span>
+                        }
+                        else
+                        {
+                            <span class="text-white font-display fw-bold">$@Model.ShippingEstimate.ToString("F2")</span>
+                        }
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3 pb-3 border-bottom border-secondary border-opacity-25 small">
+                        <span class="text-secondary">Estimated Tax (8%)</span>
+                        <span class="text-white font-display fw-bold">$@Model.TaxEstimate.ToString("F2")</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-baseline mb-4">
+                        <span class="font-heading fw-bold text-white">TOTAL TRANSMISSION</span>
+                        <span class="display-6 font-display fw-bold text-cyan">$@Model.Total.ToString("F2")</span>
+                    </div>
+
+                    @if (Model.ShippingEstimate > 0)
+                    {
+                        <div class="alert alert-dark glass-card p-2 small text-secondary mb-3" style="font-size: 0.75rem;">
+                            <i class="bi bi-info-circle text-cyan me-1"></i> Add <strong>$@((100m - Model.Subtotal).ToString("F2"))</strong> more to qualify for <strong>FREE Sub-Orbital Shipping</strong>!
+                        </div>
+                    }
+
+                    <a asp-controller="Checkout" asp-action="Index" class="btn btn-cyber-primary w-100 py-3 font-heading fw-bold text-uppercase d-flex align-items-center justify-content-center gap-2">
+                        <i class="bi bi-credit-card-2-front-fill"></i> Proceed to Cyber Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

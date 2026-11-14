@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0f2136" />
+      <stop offset="100%" stop-color="#07090e" />
+    </radialGradient>
+    <linearGradient id="cyanBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#bg)"/>
+  
+  <!-- Pedestal -->
+  <ellipse cx="300" cy="510" rx="180" ry="24" fill="none" stroke="url(#cyanBlue)" stroke-width="2" filter="url(#glow)"/>
+  <ellipse cx="300" cy="510" rx="140" ry="16" fill="rgba(6, 182, 212, 0.12)" />
+
+  <!-- T-Shirt Body -->
+  <path d="M 230,120 Q 300,165 370,120 L 460,180 L 415,260 L 375,235 L 375,470 L 225,470 L 225,235 L 185,260 L 140,180 Z" 
+        fill="#111319" stroke="#1e2433" stroke-width="3" />
+
+  <!-- Collar -->
+  <path d="M 230,120 Q 300,165 370,120 Q 300,140 230,120 Z" fill="#181b26" stroke="#00f2fe" stroke-width="1.5"/>
+
+  <!-- Chest Graphic: Quantum Circuit Glitch -->
+  <g transform="translate(300, 290)" filter="url(#glow)">
+    <!-- Central Quantum Core -->
+    <circle cx="0" cy="0" r="45" fill="none" stroke="url(#cyanBlue)" stroke-width="2.5" stroke-dasharray="6,4"/>
+    <circle cx="0" cy="0" r="28" fill="rgba(0, 242, 254, 0.15)" stroke="#00f2fe" stroke-width="1.5"/>
+    <polygon points="0,-18 16,10 -16,10" fill="none" stroke="#ffffff" stroke-width="2"/>
+    
+    <!-- Circuit Traces -->
+    <path d="M -45,0 L -75,0 L -90,-25 L -115,-25" fill="none" stroke="#00f2fe" stroke-width="2"/>
+    <circle cx="-115" cy="-25" r="4" fill="#00f2fe"/>
+
+    <path d="M 45,0 L 75,0 L 90,25 L 115,25" fill="none" stroke="#4facfe" stroke-width="2"/>
+    <circle cx="115" cy="25" r="4" fill="#4facfe"/>
+
+    <path d="M 0,-45 L 0,-70 L 25,-85" fill="none" stroke="#00f2fe" stroke-width="2"/>
+    <circle cx="25" cy="-85" r="3" fill="#ffffff"/>
+
+    <path d="M 0,45 L 0,70 L -25,85" fill="none" stroke="#4facfe" stroke-width="2"/>
+    <circle cx="-25" cy="85" r="3" fill="#ffffff"/>
+
+    <text x="0" y="75" text-anchor="middle" font-family="'Orbitron', monospace" font-size="11" font-weight="800" fill="#00f2fe" letter-spacing="3">
+      QUANTUM::CORE
+    </text>
+  </g>
+</svg>
+

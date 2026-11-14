@@ -1,0 +1,165 @@
+@model ECommerce.Web.Models.ProfileViewModel
+@{
+    ViewData["Title"] = "Operator Profile & History";
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-secondary">Home</a></li>
+            <li class="breadcrumb-item active text-cyan" aria-current="page">Operator Profile</li>
+        </ol>
+    </nav>
+
+    <div class="mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+        <h1 class="h2 font-display text-white mb-1">
+            <i class="bi bi-person-badge-fill text-purple me-2"></i>OPERATOR TERMINAL
+        </h1>
+        <p class="text-secondary small mb-0">Manage delivery telemetry and review past order manifests.</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Telemetry Coordinates Form -->
+        <div class="col-lg-4">
+            <div class="glass-panel p-4 mb-4" style="border: 1px solid rgba(168, 85, 247, 0.4);">
+                <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+                    <div class="p-3 rounded-circle glass-card border-cyan text-cyan fs-3">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div>
+                        <h5 class="h6 font-heading text-white fw-bold mb-0">@Model.FullName</h5>
+                        <div class="small text-muted font-display" style="font-size: 0.75rem;">@Model.Email</div>
+                        <span class="badge-cyber badge-cyber-purple small mt-1">OPERATOR ACTIVE</span>
+                    </div>
+                </div>
+
+                <form asp-controller="Account" asp-action="UpdateProfile" method="post">
+                    @Html.AntiForgeryToken()
+                    <h6 class="small font-display text-secondary text-uppercase mb-3">Telemetry Coordinates</h6>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label small font-heading fw-bold text-secondary">FULL ALIAS</label>
+                        <input asp-for="FullName" class="form-control form-control-cyber form-control-sm" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="StreetAddress" class="form-label small font-heading fw-bold text-secondary">STREET ADDRESS</label>
+                        <input asp-for="StreetAddress" class="form-control form-control-cyber form-control-sm" placeholder="42 Neon Boulevard" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="City" class="form-label small font-heading fw-bold text-secondary">CITY / HABITAT</label>
+                        <input asp-for="City" class="form-control form-control-cyber form-control-sm" placeholder="Night City" />
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label asp-for="State" class="form-label small font-heading fw-bold text-secondary">STATE / ZONE</label>
+                            <input asp-for="State" class="form-control form-control-cyber form-control-sm" placeholder="Kanto" />
+                        </div>
+                        <div class="col-6">
+                            <label asp-for="PostalCode" class="form-label small font-heading fw-bold text-secondary">POSTAL CODE</label>
+                            <input asp-for="PostalCode" class="form-control form-control-cyber form-control-sm" placeholder="94016" />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Country" class="form-label small font-heading fw-bold text-secondary">FEDERATION / COUNTRY</label>
+                        <input asp-for="Country" class="form-control form-control-cyber form-control-sm" placeholder="United Neo Federation" />
+                    </div>
+
+                    <button type="submit" class="btn btn-cyber-primary btn-sm w-100">
+                        <i class="bi bi-save me-1"></i> Update Coordinates
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Order Manifest History -->
+        <div class="col-lg-8">
+            <div class="glass-panel p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25">
+                    <h5 class="h6 font-display text-white mb-0 text-uppercase" style="letter-spacing: 1px;">
+                        <i class="bi bi-clock-history text-cyan me-2"></i>Order Transmissions History
+                    </h5>
+                    <span class="badge-cyber badge-cyber-cyan">@Model.Orders.Count Total Orders</span>
+                </div>
+
+                @if (!Model.Orders.Any())
+                {
+                    <div class="text-center py-5">
+                        <i class="bi bi-box2 text-muted fs-1 mb-3 d-block"></i>
+                        <h6 class="font-display text-white mb-1">NO PREVIOUS TRANSMISSIONS</h6>
+                        <p class="text-secondary small mb-3">You have not placed any merchandise orders on this account yet.</p>
+                        <a asp-controller="Catalog" asp-action="Index" class="btn btn-cyber-outline btn-sm">
+                            Explore Merchandise Catalog
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-cyber mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Order Identifier</th>
+                                    <th>Date</th>
+                                    <th>Items</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var order in Model.Orders)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span class="font-display fw-bold text-white small">@order.OrderNumber</span>
+                                        </td>
+                                        <td class="small text-secondary font-heading">
+                                            @order.OrderDate.ToString("yyyy-MM-dd")
+                                        </td>
+                                        <td class="small text-secondary">
+                                            @order.Items.Sum(i => i.Quantity) units
+                                        </td>
+                                        <td class="font-display fw-bold text-cyan small">
+                                            $@order.TotalAmount.ToString("F2")
+                                        </td>
+                                        <td>
+                                            @switch (order.Status)
+                                            {
+                                                case ECommerce.Core.Enums.OrderStatus.Pending:
+                                                    <span class="badge-cyber badge-cyber-purple">PENDING</span>
+                                                    break;
+                                                case ECommerce.Core.Enums.OrderStatus.Processing:
+                                                    <span class="badge-cyber badge-cyber-cyan">PROCESSING</span>
+                                                    break;
+                                                case ECommerce.Core.Enums.OrderStatus.Shipped:
+                                                    <span class="badge-cyber badge-cyber-green">SHIPPED</span>
+                                                    break;
+                                                case ECommerce.Core.Enums.OrderStatus.Delivered:
+                                                    <span class="badge-cyber badge-cyber-green">DELIVERED</span>
+                                                    break;
+                                                case ECommerce.Core.Enums.OrderStatus.Cancelled:
+                                                    <span class="badge-cyber badge-cyber-red">CANCELLED</span>
+                                                    break;
+                                            }
+                                        </td>
+                                        <td class="text-end">
+                                            <a asp-controller="Account" asp-action="OrderDetails" asp-route-id="@order.Id" class="btn btn-cyber-outline btn-sm py-1 px-2" title="Inspect Invoice">
+                                                <i class="bi bi-receipt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,183 @@
+@model ECommerce.Application.DTOs.ProductDto
+@{
+    ViewData["Title"] = Model.Name;
+    var relatedProducts = ViewBag.RelatedProducts as IReadOnlyList<ECommerce.Application.DTOs.ProductDto> ?? new List<ECommerce.Application.DTOs.ProductDto>();
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-secondary">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Catalog" asp-action="Index" class="text-decoration-none text-secondary">Catalog</a></li>
+            @if (!string.IsNullOrEmpty(Model.CategorySlug))
+            {
+                <li class="breadcrumb-item"><a asp-controller="Catalog" asp-action="Index" asp-route-categorySlug="@Model.CategorySlug" class="text-decoration-none text-secondary">@Model.CategoryName</a></li>
+            }
+            <li class="breadcrumb-item active text-cyan" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <!-- Main Product Layout -->
+    <div class="row g-5 mb-5">
+        <!-- Visual Display Column -->
+        <div class="col-lg-6">
+            <div class="product-detail-img-box mb-3 position-relative">
+                @if (Model.HasDiscount)
+                {
+                    <span class="badge-cyber badge-cyber-red position-absolute top-0 start-0 m-4">-@Model.DiscountPercentage% OFF</span>
+                }
+                @if (Model.IsFeatured)
+                {
+                    <span class="badge-cyber badge-cyber-purple position-absolute top-0 end-0 m-4"><i class="bi bi-stars me-1"></i> COLLECTOR TIER</span>
+                }
+                <img src="@Model.PrimaryImageUrl" alt="@Model.Name" id="main-product-img" />
+            </div>
+
+            <!-- Thumbnail Carousel if multiple images exist -->
+            @if (Model.Images.Count > 1)
+            {
+                <div class="d-flex gap-2">
+                    @foreach (var img in Model.Images)
+                    {
+                        <div class="glass-card p-2 cursor-pointer" style="width: 75px; height: 75px; border-radius: 10px;" onclick="document.getElementById('main-product-img').src='@img.ImageUrl'">
+                            <img src="@img.ImageUrl" alt="@Model.Name" class="w-100 h-100 object-fit-contain" />
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- Spec & Purchase Details Column -->
+        <div class="col-lg-6">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge-cyber badge-cyber-cyan text-uppercase">@Model.CategoryName</span>
+                <span class="text-muted small">SKU: <span class="font-display text-secondary">@Model.SKU</span></span>
+            </div>
+
+            <h1 class="h2 font-display text-white mb-3">@Model.Name</h1>
+
+            <!-- Price & Stock Status -->
+            <div class="d-flex align-items-baseline gap-3 mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+                <span class="display-6 font-display fw-bold text-white">$@Model.Price.ToString("F2")</span>
+                @if (Model.HasDiscount)
+                {
+                    <span class="fs-4 text-decoration-line-through text-muted">$@Model.OriginalPrice?.ToString("F2")</span>
+                    <span class="badge-cyber badge-cyber-red">Save $@((Model.OriginalPrice!.Value - Model.Price).ToString("F2"))</span>
+                }
+                <div class="ms-auto">
+                    @if (Model.InStock)
+                    {
+                        <span class="badge-cyber badge-cyber-green d-flex align-items-center gap-1">
+                            <i class="bi bi-check-circle-fill"></i> @Model.StockQuantity IN STOCK
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge-cyber badge-cyber-red d-flex align-items-center gap-1">
+                            <i class="bi bi-x-circle-fill"></i> DEPLETED
+                        </span>
+                    }
+                </div>
+            </div>
+
+            <!-- Short description -->
+            <p class="lead text-secondary-cyber fs-6 mb-4">
+                @Model.ShortDescription
+            </p>
+
+            <!-- Quantity & Add to Cart form -->
+            @if (Model.InStock)
+            {
+                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="glass-panel p-4 mb-4 border-cyan">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="productId" value="@Model.Id" />
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-sm-4">
+                            <label class="form-label small font-heading fw-bold text-secondary mb-1">QUANTITY</label>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-cyber-outline btn-sm" onclick="let input=document.getElementById('product-quantity'); if(parseInt(input.value)>1) input.value=parseInt(input.value)-1;">-</button>
+                                <input type="number" id="product-quantity" name="quantity" class="form-control form-control-cyber form-control-sm text-center font-display fw-bold" value="1" min="1" max="@Model.StockQuantity" />
+                                <button type="button" class="btn btn-cyber-outline btn-sm" onclick="let input=document.getElementById('product-quantity'); if(parseInt(input.value)<@Model.StockQuantity) input.value=parseInt(input.value)+1;">+</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 pt-sm-4">
+                            <button type="submit" class="btn btn-cyber-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-cart-plus-fill fs-5"></i> Beam to Cart
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="alert alert-secondary glass-panel border-secondary text-secondary mb-4">
+                    <i class="bi bi-info-circle me-2"></i> This artifact is temporarily out of quantum storage. Check back during the next batch synthesis.
+                </div>
+            }
+
+            <!-- Full Lore & Details Accordion / Tabs -->
+            <div class="glass-panel p-4 mb-4">
+                <h5 class="h6 font-display text-white mb-3 text-uppercase" style="letter-spacing: 1px;">
+                    <i class="bi bi-cpu text-purple me-2"></i> Technical Specifications
+                </h5>
+                <p class="small text-secondary mb-3" style="line-height: 1.7;">
+                    @Model.Description
+                </p>
+
+                <div class="spec-item">
+                    <span class="text-secondary small">Fabrication Grade:</span>
+                    <span class="text-white small font-heading fw-bold">Mil-Spec Aero Grade</span>
+                </div>
+                <div class="spec-item">
+                    <span class="text-secondary small">Smart Authentication:</span>
+                    <span class="text-cyan small font-heading fw-bold">Encrypted NFC Core</span>
+                </div>
+                <div class="spec-item">
+                    <span class="text-secondary small">Dispatch Protocol:</span>
+                    <span class="text-white small font-heading fw-bold">Vacuum Sealed Anti-Static Mylar</span>
+                </div>
+                <div class="spec-item border-bottom-0">
+                    <span class="text-secondary small">Warranty &amp; Returns:</span>
+                    <span class="text-white small font-heading fw-bold">30 Days Orbital Return</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    @if (relatedProducts.Any())
+    {
+        <div class="pt-4 border-top border-secondary border-opacity-25">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <span class="badge-cyber badge-cyber-cyan mb-1">COMPATIBLE ARTIFACTS</span>
+                    <h3 class="h4 font-display text-white mb-0">YOU MAY ALSO TRANSMIT</h3>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                @foreach (var rel in relatedProducts)
+                {
+                    <div class="col-lg-3 col-md-6">
+                        <div class="product-card">
+                            <a asp-controller="Catalog" asp-action="Details" asp-route-slug="@rel.Slug" class="product-card-img-wrap text-decoration-none">
+                                <img src="@rel.PrimaryImageUrl" alt="@rel.Name" loading="lazy" />
+                            </a>
+                            <div class="product-card-body">
+                                <span class="small text-cyan font-heading text-uppercase mb-1" style="font-size: 0.7rem;">@rel.CategoryName</span>
+                                <a asp-controller="Catalog" asp-action="Details" asp-route-slug="@rel.Slug" class="product-card-title mb-2">@rel.Name</a>
+                                <div class="mt-auto d-flex justify-content-between align-items-center pt-2">
+                                    <span class="product-price-current fs-5">$@rel.Price.ToString("F2")</span>
+                                    <a asp-controller="Catalog" asp-action="Details" asp-route-slug="@rel.Slug" class="btn btn-cyber-outline btn-sm">Inspect</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+

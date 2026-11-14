@@ -1,0 +1,110 @@
+@model ECommerce.Application.DTOs.ProductCreateUpdateDto
+@{
+    ViewData["Title"] = "Deploy New Product";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+    <div>
+        <h1 class="h3 font-display text-white mb-1">
+            <i class="bi bi-plus-circle-fill text-purple me-2"></i>DEPLOY NEW PRODUCT
+        </h1>
+        <p class="text-secondary small mb-0">Specify parameters and deploy artifact to the storefront catalog.</p>
+    </div>
+    <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-cyber-outline btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Products
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="glass-panel p-4 p-md-5">
+            <form asp-area="Admin" asp-controller="Products" asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger glass-panel border-pink text-white small mb-4"></div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-8">
+                        <label asp-for="Name" class="form-label small font-heading fw-bold text-secondary">PRODUCT NAME</label>
+                        <input asp-for="Name" class="form-control form-control-cyber" placeholder="e.g. Cyber Samurai Oversized Tee" required />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="CategoryId" class="form-label small font-heading fw-bold text-secondary">CATEGORY</label>
+                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select form-select-cyber" required>
+                            <option value="">Select Category</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="SKU" class="form-label small font-heading fw-bold text-secondary">SKU IDENTIFIER</label>
+                        <input asp-for="SKU" class="form-control form-control-cyber" placeholder="e.g. TSH-CYBER-99" required />
+                        <span asp-validation-for="SKU" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Price" class="form-label small font-heading fw-bold text-secondary">PRICE ($)</label>
+                        <input asp-for="Price" type="number" step="0.01" class="form-control form-control-cyber" placeholder="45.00" required />
+                        <span asp-validation-for="Price" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="OriginalPrice" class="form-label small font-heading fw-bold text-secondary">ORIGINAL PRICE ($) (OPTIONAL)</label>
+                        <input asp-for="OriginalPrice" type="number" step="0.01" class="form-control form-control-cyber" placeholder="55.00" />
+                        <span asp-validation-for="OriginalPrice" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="StockQuantity" class="form-label small font-heading fw-bold text-secondary">STOCK QUANTITY</label>
+                        <input asp-for="StockQuantity" type="number" class="form-control form-control-cyber" required />
+                        <span asp-validation-for="StockQuantity" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ImageUrl" class="form-label small font-heading fw-bold text-secondary">IMAGE URL</label>
+                        <input asp-for="ImageUrl" class="form-control form-control-cyber" placeholder="/images/products/tshirt-samurai.svg" />
+                        <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="ShortDescription" class="form-label small font-heading fw-bold text-secondary">SHORT SUMMARY</label>
+                        <input asp-for="ShortDescription" class="form-control form-control-cyber" placeholder="High-frequency silkscreen graphics on heavyweight organic cotton." />
+                        <span asp-validation-for="ShortDescription" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Description" class="form-label small font-heading fw-bold text-secondary">FULL TECHNICAL SPECIFICATION &amp; LORE</label>
+                        <textarea asp-for="Description" class="form-control form-control-cyber" rows="4" required></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-4 p-3 glass-card mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input bg-dark border-secondary" type="checkbox" asp-for="IsFeatured" />
+                        <label class="form-check-label small text-white font-heading" asp-for="IsFeatured">
+                            Highlight in Featured Drops
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input bg-dark border-secondary" type="checkbox" asp-for="IsActive" checked />
+                        <label class="form-check-label small text-white font-heading" asp-for="IsActive">
+                            Active in Public Catalog
+                        </label>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-cyber-primary py-2 px-4">
+                        <i class="bi bi-cloud-upload-fill me-1"></i> Deploy Product
+                    </button>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-cyber-outline py-2 px-4">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

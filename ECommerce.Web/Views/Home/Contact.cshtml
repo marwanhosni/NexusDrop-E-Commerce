@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Neural Dispatch & Comms";
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-secondary">Home</a></li>
+            <li class="breadcrumb-item active text-cyan" aria-current="page">Neural Dispatch</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="glass-panel p-4 p-md-5" style="border: 1px solid rgba(6, 182, 212, 0.4);">
+                <div class="text-center mb-4">
+                    <span class="badge-cyber badge-cyber-cyan mb-2">FREQUENCY: 142.85 MHz</span>
+                    <h1 class="h3 font-display text-white mb-2">NEURAL COMMS TERMINAL</h1>
+                    <p class="text-secondary small">Transmit inquiries regarding custom drops, wholesale orders, or courier tracking.</p>
+                </div>
+
+                <form onsubmit="event.preventDefault(); showCyberToast('Transmission encrypted and beamed to HQ!'); this.reset();">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small font-heading fw-bold text-secondary">OPERATOR CODENAME</label>
+                            <input type="text" class="form-control form-control-cyber" placeholder="e.g. Kaelen" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small font-heading fw-bold text-secondary">DISPATCH FREQUENCY (EMAIL)</label>
+                            <input type="email" class="form-control form-control-cyber" placeholder="operator@cybernet.io" required />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label small font-heading fw-bold text-secondary">TRANSMISSION CHANNEL</label>
+                            <select class="form-select form-select-cyber">
+                                <option>Order &amp; Courier Telemetry</option>
+                                <option>Custom Wholesale Fabrication</option>
+                                <option>Defective Unit Replacement</option>
+                                <option>Security / Vulnerability Disclosure</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label small font-heading fw-bold text-secondary">MESSAGE BODY</label>
+                            <textarea class="form-control form-control-cyber" rows="4" placeholder="Transmit your request in clear text..." required></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-cyber-cyan w-100 py-2 font-heading fw-bold text-uppercase d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-broadcast"></i> Beam Transmission
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

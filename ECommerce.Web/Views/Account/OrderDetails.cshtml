@@ -1,0 +1,119 @@
+@model ECommerce.Application.DTOs.OrderDto
+@{
+    ViewData["Title"] = $"Order {Model.OrderNumber}";
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-secondary">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Account" asp-action="Profile" class="text-decoration-none text-secondary">Profile</a></li>
+            <li class="breadcrumb-item active text-cyan" aria-current="page">Order @Model.OrderNumber</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 pb-3 border-bottom border-secondary border-opacity-25 gap-2">
+        <div>
+            <h1 class="h3 font-display text-white mb-1">ORDER @Model.OrderNumber</h1>
+            <div class="small text-secondary font-heading">
+                Placed on @Model.OrderDate.ToString("MMMM dd, yyyy HH:mm UTC")
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge-cyber badge-cyber-purple fs-6">@Model.Status</span>
+            <button class="btn btn-cyber-outline btn-sm" onclick="window.print()">
+                <i class="bi bi-printer me-1"></i> Print
+            </button>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="glass-panel p-4 mb-4">
+                <h5 class="h6 font-display text-white mb-3 text-uppercase" style="letter-spacing: 1px;">
+                    Artifact Manifest
+                </h5>
+
+                <div class="table-responsive">
+                    <table class="table table-cyber mb-0 align-middle">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-end">Unit Price</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            @if (!string.IsNullOrEmpty(item.ProductImageUrl))
+                                            {
+                                                <div class="glass-card p-1 text-center" style="width: 44px; height: 44px; border-radius: 8px; background: #0c0e17;">
+                                                    <img src="@item.ProductImageUrl" alt="@item.ProductName" class="w-100 h-100 object-fit-contain" />
+                                                </div>
+                                            }
+                                            <span class="text-white font-heading fw-bold small">@item.ProductName</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-center font-display text-white small">@item.Quantity</td>
+                                    <td class="text-end font-display text-secondary small">$@item.UnitPrice.ToString("F2")</td>
+                                    <td class="text-end font-display text-cyan fw-bold small">$@item.TotalPrice.ToString("F2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="glass-panel p-4 mb-4">
+                <h5 class="h6 font-display text-white mb-3 pb-2 border-bottom border-secondary border-opacity-25 text-uppercase" style="letter-spacing: 1px;">
+                    Summary &amp; Coordinates
+                </h5>
+
+                <div class="mb-3">
+                    <span class="small font-display text-secondary text-uppercase d-block mb-1">Recipient:</span>
+                    <div class="small text-white font-heading fw-bold">@Model.CustomerName</div>
+                    <div class="small text-secondary">@Model.CustomerEmail</div>
+                    <div class="small text-secondary">@Model.CustomerPhone</div>
+                </div>
+
+                <div class="mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+                    <span class="small font-display text-secondary text-uppercase d-block mb-1">Destination:</span>
+                    <div class="small text-secondary">@Model.ShippingAddress</div>
+                    <div class="small text-secondary">@Model.City, @Model.State @Model.PostalCode</div>
+                    <div class="small text-secondary">@Model.Country</div>
+                </div>
+
+                <div class="d-flex justify-content-between mb-1 small">
+                    <span class="text-secondary">Subtotal</span>
+                    <span class="text-white font-display fw-bold">$@Model.Subtotal.ToString("F2")</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1 small">
+                    <span class="text-secondary">Shipping</span>
+                    <span class="text-white font-display fw-bold">$@Model.ShippingCost.ToString("F2")</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2 small">
+                    <span class="text-secondary">Tax (8%)</span>
+                    <span class="text-white font-display fw-bold">$@Model.TaxAmount.ToString("F2")</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-baseline pt-2 border-top border-secondary border-opacity-25">
+                    <span class="font-heading fw-bold text-white">TOTAL</span>
+                    <span class="font-display fw-bold text-cyan fs-5">$@Model.TotalAmount.ToString("F2")</span>
+                </div>
+                <div class="small text-muted font-heading mt-2">Paid via @Model.PaymentMethod</div>
+            </div>
+
+            <a asp-controller="Account" asp-action="Profile" class="btn btn-cyber-outline w-100 btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Back to Profile
+            </a>
+        </div>
+    </div>
+</div>
+

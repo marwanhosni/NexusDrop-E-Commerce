@@ -1,0 +1,80 @@
+@model ECommerce.Web.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Grid Authentication";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-5">
+            <!-- Glassmorphic Auth Card -->
+            <div class="glass-panel p-4 p-md-5 position-relative" style="border: 1px solid rgba(168, 85, 247, 0.4); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);">
+                <div class="text-center mb-4">
+                    <img src="~/images/logo.svg" alt="Marwan Hosny Store" style="height: 34px;" class="mb-3" />
+                    <h1 class="h4 font-display text-white mb-1">MARWAN HOSNY STORE</h1>
+                    <p class="text-secondary small">Authenticate operator credentials to enter the terminal.</p>
+                </div>
+
+                <!-- One-Click Demo Credential Helpers -->
+                <div class="glass-card p-3 mb-4 text-center border-cyan">
+                    <div class="small font-display text-cyan mb-2" style="font-size: 0.75rem; letter-spacing: 1px;">
+                        <i class="bi bi-lightning-charge-fill"></i> INSTANT DEMO CREDENTIALS
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button type="button" class="btn btn-cyber-outline btn-sm py-1 px-3 small font-heading" onclick="window.fillAdminCredentials()">
+                            <i class="bi bi-shield-lock-fill text-purple me-1"></i> Admin (admin@marwanhosny.store)
+                        </button>
+                        <button type="button" class="btn btn-cyber-outline btn-sm py-1 px-3 small font-heading" onclick="window.fillCustomerCredentials()">
+                            <i class="bi bi-person-fill text-cyan me-1"></i> Customer (customer@marwanhosny.store)
+                        </button>
+                    </div>
+                </div>
+
+                <form asp-controller="Account" asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="ReturnUrl" />
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger glass-panel border-pink text-white small mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label small font-heading fw-bold text-secondary">NEURAL DISPATCH EMAIL</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-cyan"><i class="bi bi-envelope-at-fill"></i></span>
+                            <input asp-for="Email" class="form-control form-control-cyber" placeholder="operator@cybernet.io" required />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label small font-heading fw-bold text-secondary">AUTHENTICATION KEY (PASSWORD)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-purple"><i class="bi bi-key-fill"></i></span>
+                            <input asp-for="Password" class="form-control form-control-cyber" placeholder="••••••••" required />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input bg-dark border-secondary" type="checkbox" asp-for="RememberMe" />
+                            <label class="form-check-label small text-secondary font-heading" asp-for="RememberMe">
+                                Maintain Link
+                            </label>
+                        </div>
+                        <span class="small text-muted font-heading">Encrypted 256-bit</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-cyber-primary w-100 py-2 font-heading fw-bold text-uppercase d-flex align-items-center justify-content-center gap-2 mb-3">
+                        <i class="bi bi-box-arrow-in-right"></i> Authenticate &amp; Connect
+                    </button>
+
+                    <div class="text-center pt-3 border-top border-secondary border-opacity-25">
+                        <span class="small text-secondary">New operator on the network?</span>
+                        <a asp-controller="Account" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="small text-cyan font-heading fw-bold text-decoration-none ms-1">
+                            Initialize Account <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

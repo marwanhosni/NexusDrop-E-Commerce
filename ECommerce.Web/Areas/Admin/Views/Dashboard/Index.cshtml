@@ -1,0 +1,214 @@
+@model ECommerce.Application.DTOs.DashboardMetricsDto
+@{
+    ViewData["Title"] = "Command Deck Overview";
+}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 border-bottom border-secondary border-opacity-25 gap-3">
+    <div>
+        <h1 class="h3 font-display text-white mb-1">
+            <i class="bi bi-speedometer2 text-cyan me-2"></i>METRIC TELEMETRY &amp; OVERVIEW
+        </h1>
+        <p class="text-secondary small mb-0">Real-time status of commercial transactions, product volume, and customer nodes.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-area="Admin" asp-controller="Products" asp-action="Create" class="btn btn-cyber-primary btn-sm d-flex align-items-center gap-1">
+            <i class="bi bi-plus-circle-fill"></i> New Product
+        </a>
+        <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="btn btn-cyber-cyan btn-sm d-flex align-items-center gap-1">
+            <i class="bi bi-receipt"></i> All Orders
+        </a>
+    </div>
+</div>
+
+<!-- 4 Key Stat Metrics Cards -->
+<div class="row g-4 mb-5">
+    <div class="col-sm-6 col-xl-3">
+        <div class="metric-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="small font-heading text-secondary fw-bold text-uppercase">GROSS REVENUE</span>
+                <span class="p-2 rounded-3 glass-card border-cyan text-cyan">
+                    <i class="bi bi-currency-dollar fs-5"></i>
+                </span>
+            </div>
+            <div class="metric-value text-cyan">$@Model.TotalRevenue.ToString("F2")</div>
+            <div class="small text-muted font-heading mt-2">
+                <span class="text-success"><i class="bi bi-arrow-up-right me-1"></i>Live Settlements</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="metric-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="small font-heading text-secondary fw-bold text-uppercase">TOTAL ORDERS</span>
+                <span class="p-2 rounded-3 glass-card border-purple text-purple">
+                    <i class="bi bi-cart-check-fill fs-5"></i>
+                </span>
+            </div>
+            <div class="metric-value text-purple">@Model.TotalOrders</div>
+            <div class="small text-muted font-heading mt-2">
+                <span class="text-cyan">@Model.PendingOrders pending dispatch</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="metric-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="small font-heading text-secondary fw-bold text-uppercase">ACTIVE PRODUCTS</span>
+                <span class="p-2 rounded-3 glass-card border-pink text-pink">
+                    <i class="bi bi-box-seam-fill fs-5"></i>
+                </span>
+            </div>
+            <div class="metric-value text-pink">@Model.TotalProducts</div>
+            <div class="small text-muted font-heading mt-2">
+                @if (Model.LowStockProducts > 0)
+                {
+                    <span class="text-danger"><i class="bi bi-exclamation-circle me-1"></i>@Model.LowStockProducts Low Stock</span>
+                }
+                else
+                {
+                    <span class="text-success">Optimal Inventory</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-3">
+        <div class="metric-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="small font-heading text-secondary fw-bold text-uppercase">REGISTERED USERS</span>
+                <span class="p-2 rounded-3 glass-card border-blue text-blue">
+                    <i class="bi bi-people-fill fs-5"></i>
+                </span>
+            </div>
+            <div class="metric-value text-blue">@Model.TotalCustomers</div>
+            <div class="small text-muted font-heading mt-2">
+                <span class="text-white">Active Operator Identities</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Orders & Category Sales Breakdown -->
+<div class="row g-4">
+    <!-- Recent Orders Table -->
+    <div class="col-lg-8">
+        <div class="glass-panel p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-secondary border-opacity-25">
+                <h5 class="h6 font-display text-white mb-0 text-uppercase" style="letter-spacing: 1px;">
+                    <i class="bi bi-clock-history text-cyan me-2"></i>Recent Orders Telemetry
+                </h5>
+                <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="small text-cyan text-decoration-none font-heading fw-bold">
+                    View All Orders <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+
+            @if (!Model.RecentOrders.Any())
+            {
+                <div class="text-center py-4 text-muted small">No order transmissions logged yet.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-cyber mb-0 align-middle">
+                        <thead>
+                            <tr>
+                                <th>Order Ref</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th class="text-end">Manage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.RecentOrders)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="font-display fw-bold text-white small">@order.OrderNumber</span>
+                                        <div class="text-muted" style="font-size: 0.75rem;">@order.OrderDate.ToString("yyyy-MM-dd HH:mm")</div>
+                                    </td>
+                                    <td>
+                                        <div class="small text-white font-heading fw-bold">@order.CustomerName</div>
+                                        <div class="text-secondary" style="font-size: 0.75rem;">@order.CustomerEmail</div>
+                                    </td>
+                                    <td class="font-display fw-bold text-cyan small">
+                                        $@order.TotalAmount.ToString("F2")
+                                    </td>
+                                    <td>
+                                        @switch (order.Status)
+                                        {
+                                            case ECommerce.Core.Enums.OrderStatus.Pending:
+                                                <span class="badge-cyber badge-cyber-purple">PENDING</span>
+                                                break;
+                                            case ECommerce.Core.Enums.OrderStatus.Processing:
+                                                <span class="badge-cyber badge-cyber-cyan">PROCESSING</span>
+                                                break;
+                                            case ECommerce.Core.Enums.OrderStatus.Shipped:
+                                                <span class="badge-cyber badge-cyber-green">SHIPPED</span>
+                                                break;
+                                            case ECommerce.Core.Enums.OrderStatus.Delivered:
+                                                <span class="badge-cyber badge-cyber-green">DELIVERED</span>
+                                                break;
+                                            case ECommerce.Core.Enums.OrderStatus.Cancelled:
+                                                <span class="badge-cyber badge-cyber-red">CANCELLED</span>
+                                                break;
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <a asp-area="Admin" asp-controller="Orders" asp-action="Details" asp-route-id="@order.Id" class="btn btn-cyber-outline btn-sm py-1 px-2" title="Inspect Order">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Category Sales Breakdown -->
+    <div class="col-lg-4">
+        <div class="glass-panel p-4 h-100">
+            <h5 class="h6 font-display text-white mb-3 pb-2 border-bottom border-secondary border-opacity-25 text-uppercase" style="letter-spacing: 1px;">
+                <i class="bi bi-pie-chart-fill text-purple me-2"></i>Category Breakdown
+            </h5>
+
+            <div class="d-flex flex-column gap-3 mb-4">
+                @foreach (var cat in Model.CategoryBreakdown)
+                {
+                    <div class="glass-card p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="font-heading fw-bold text-white small">@cat.CategoryName</span>
+                            <span class="badge-cyber badge-cyber-purple">@cat.ProductCount items</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center small text-secondary">
+                            <span>Units Transmitted:</span>
+                            <span class="text-cyan font-display fw-bold">@cat.ItemsSold</span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Quick Action Links -->
+            <div class="pt-3 border-top border-secondary border-opacity-25">
+                <h6 class="small font-display text-secondary text-uppercase mb-2">Direct Shortcuts</h6>
+                <div class="d-grid gap-2">
+                    <a asp-area="Admin" asp-controller="Products" asp-action="Create" class="btn btn-cyber-outline btn-sm text-start">
+                        <i class="bi bi-plus-square text-cyan me-2"></i> Deploy New Product
+                    </a>
+                    <a asp-area="Admin" asp-controller="Categories" asp-action="Create" class="btn btn-cyber-outline btn-sm text-start">
+                        <i class="bi bi-folder-plus text-purple me-2"></i> Add Merchandise Category
+                    </a>
+                    <a asp-area="Admin" asp-controller="Inventory" asp-action="Index" class="btn btn-cyber-outline btn-sm text-start">
+                        <i class="bi bi-sliders text-pink me-2"></i> Bulk Inventory Update
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

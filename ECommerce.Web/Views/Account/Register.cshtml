@@ -1,0 +1,72 @@
+@model ECommerce.Web.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Initialize Cyber Account";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-5">
+            <div class="glass-panel p-4 p-md-5 position-relative" style="border: 1px solid rgba(6, 182, 212, 0.4); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);">
+                <div class="text-center mb-4">
+                    <img src="~/images/logo.svg" alt="Marwan Hosny Store" style="height: 34px;" class="mb-3" />
+                    <h1 class="h4 font-display text-white mb-1">INITIALIZE IDENTITY</h1>
+                    <p class="text-secondary small">Register your operator profile for quantum checkout and order tracking.</p>
+                </div>
+
+                <form asp-controller="Account" asp-action="Register" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="ReturnUrl" />
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger glass-panel border-pink text-white small mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label small font-heading fw-bold text-secondary">FULL NAME / OPERATOR ALIAS</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-cyan"><i class="bi bi-person-fill"></i></span>
+                            <input asp-for="FullName" class="form-control form-control-cyber" placeholder="Aria Chen" required />
+                        </div>
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label small font-heading fw-bold text-secondary">NEURAL DISPATCH EMAIL</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-cyan"><i class="bi bi-envelope-at-fill"></i></span>
+                            <input asp-for="Email" class="form-control form-control-cyber" placeholder="operator@cybernet.io" required />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label small font-heading fw-bold text-secondary">SECURITY KEY (MIN 6 CHARACTERS)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-purple"><i class="bi bi-lock-fill"></i></span>
+                            <input asp-for="Password" class="form-control form-control-cyber" placeholder="••••••••" required />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="ConfirmPassword" class="form-label small font-heading fw-bold text-secondary">CONFIRM SECURITY KEY</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-purple"><i class="bi bi-shield-lock-fill"></i></span>
+                            <input asp-for="ConfirmPassword" class="form-control form-control-cyber" placeholder="••••••••" required />
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-cyber-cyan w-100 py-2 font-heading fw-bold text-uppercase d-flex align-items-center justify-content-center gap-2 mb-3">
+                        <i class="bi bi-person-plus-fill"></i> Initialize Identity
+                    </button>
+
+                    <div class="text-center pt-3 border-top border-secondary border-opacity-25">
+                        <span class="small text-secondary">Already initialized in the system?</span>
+                        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="small text-cyan font-heading fw-bold text-decoration-none ms-1">
+                            Connect to Terminal <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

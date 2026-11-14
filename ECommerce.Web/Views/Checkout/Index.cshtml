@@ -1,0 +1,194 @@
+@model ECommerce.Application.DTOs.CheckoutDto
+@{
+    ViewData["Title"] = "Cyber Checkout Protocol";
+    var cart = ViewBag.Cart as ECommerce.Application.DTOs.CartDto ?? new ECommerce.Application.DTOs.CartDto();
+}
+
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-secondary">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Cart" asp-action="Index" class="text-decoration-none text-secondary">Cart</a></li>
+            <li class="breadcrumb-item active text-cyan" aria-current="page">Checkout</li>
+        </ol>
+    </nav>
+
+    <div class="mb-4 pb-3 border-bottom border-secondary border-opacity-25">
+        <h1 class="h2 font-display text-white mb-1">
+            <i class="bi bi-shield-lock-fill text-cyan me-2"></i>SECURE CHECKOUT TERMINAL
+        </h1>
+        <p class="text-secondary small mb-0">Transmit your coordinates and complete encrypted authentication.</p>
+    </div>
+
+    <form asp-controller="Checkout" asp-action="PlaceOrder" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger glass-panel border-pink text-white mb-4"></div>
+
+        <div class="row g-5">
+            <!-- Left: Shipping & Payment Coordinates -->
+            <div class="col-lg-7">
+                <!-- 1. Identity & Shipping Coordinates -->
+                <div class="glass-panel p-4 mb-4">
+                    <h5 class="h6 font-display text-white mb-3 text-uppercase" style="letter-spacing: 1px;">
+                        <span class="badge bg-cyan text-dark me-2">01</span> Delivery Coordinates
+                    </h5>
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label asp-for="CustomerName" class="form-label small font-heading fw-bold text-secondary">FULL NAME / OPERATOR ALIAS</label>
+                            <input asp-for="CustomerName" class="form-control form-control-cyber" placeholder="e.g. Alex Mercer" required />
+                            <span asp-validation-for="CustomerName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="CustomerEmail" class="form-label small font-heading fw-bold text-secondary">NEURAL DISPATCH EMAIL</label>
+                            <input asp-for="CustomerEmail" class="form-control form-control-cyber" placeholder="operator@cybernet.io" required />
+                            <span asp-validation-for="CustomerEmail" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="CustomerPhone" class="form-label small font-heading fw-bold text-secondary">COMMS FREQUENCY (PHONE)</label>
+                            <input asp-for="CustomerPhone" class="form-control form-control-cyber" placeholder="+1 (555) 019-2831" required />
+                            <span asp-validation-for="CustomerPhone" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="ShippingAddress" class="form-label small font-heading fw-bold text-secondary">PHYSICAL SECTOR / STREET ADDRESS</label>
+                            <input asp-for="ShippingAddress" class="form-control form-control-cyber" placeholder="42 Neon Boulevard, Suite 800" required />
+                            <span asp-validation-for="ShippingAddress" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="City" class="form-label small font-heading fw-bold text-secondary">CITY / HABITAT</label>
+                            <input asp-for="City" class="form-control form-control-cyber" placeholder="Night City" required />
+                            <span asp-validation-for="City" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="State" class="form-label small font-heading fw-bold text-secondary">PROVINCE / ZONE / STATE</label>
+                            <input asp-for="State" class="form-control form-control-cyber" placeholder="Sector 9" />
+                            <span asp-validation-for="State" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="PostalCode" class="form-label small font-heading fw-bold text-secondary">POSTAL / GRID CODE</label>
+                            <input asp-for="PostalCode" class="form-control form-control-cyber" placeholder="94016" required />
+                            <span asp-validation-for="PostalCode" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Country" class="form-label small font-heading fw-bold text-secondary">NATION / FEDERATION</label>
+                            <input asp-for="Country" class="form-control form-control-cyber" placeholder="United Neo Federation" required />
+                            <span asp-validation-for="Country" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Payment Protocol -->
+                <div class="glass-panel p-4 mb-4">
+                    <h5 class="h6 font-display text-white mb-3 text-uppercase" style="letter-spacing: 1px;">
+                        <span class="badge bg-purple text-white me-2">02</span> Settlement Protocol
+                    </h5>
+
+                    <div class="d-flex flex-column gap-3 mb-3">
+                        <label class="glass-card p-3 d-flex align-items-center gap-3 cursor-pointer border-cyan">
+                            <input type="radio" asp-for="PaymentMethod" value="CyberPay Quantum" class="form-check-input bg-dark border-secondary m-0" checked />
+                            <div class="flex-grow-1">
+                                <div class="font-heading fw-bold text-white small">CyberPay Quantum Vault</div>
+                                <div class="text-secondary" style="font-size: 0.75rem;">Instant zero-latency token settlement with quantum proofing</div>
+                            </div>
+                            <i class="bi bi-cpu-fill text-cyan fs-4"></i>
+                        </label>
+
+                        <label class="glass-card p-3 d-flex align-items-center gap-3 cursor-pointer">
+                            <input type="radio" asp-for="PaymentMethod" value="Credit / Debit Card" class="form-check-input bg-dark border-secondary m-0" />
+                            <div class="flex-grow-1">
+                                <div class="font-heading fw-bold text-white small">Credit / Debit Card Network</div>
+                                <div class="text-secondary" style="font-size: 0.75rem;">Visa, Mastercard, American Express with 3D Secure</div>
+                            </div>
+                            <i class="bi bi-credit-card-2-front-fill text-purple fs-4"></i>
+                        </label>
+
+                        <label class="glass-card p-3 d-flex align-items-center gap-3 cursor-pointer">
+                            <input type="radio" asp-for="PaymentMethod" value="Crypto Vault (BTC/ETH/SOL)" class="form-check-input bg-dark border-secondary m-0" />
+                            <div class="flex-grow-1">
+                                <div class="font-heading fw-bold text-white small">Decentralized Crypto Gateway</div>
+                                <div class="text-secondary" style="font-size: 0.75rem;">Bitcoin, Ethereum, Solana direct on-chain verification</div>
+                            </div>
+                            <i class="bi bi-currency-bitcoin text-warning fs-4"></i>
+                        </label>
+                    </div>
+
+                    <div class="mb-0">
+                        <label asp-for="Notes" class="form-label small font-heading fw-bold text-secondary">DELIVERY INSTRUCTIONS / CARRIER MEMO</label>
+                        <textarea asp-for="Notes" class="form-control form-control-cyber" rows="2" placeholder="e.g. Leave package in secure retinal delivery lockbox."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Manifest Review & Submit -->
+            <div class="col-lg-5">
+                <div class="glass-panel p-4 position-sticky" style="top: 100px; border: 1px solid rgba(168, 85, 247, 0.4);">
+                    <h5 class="h6 font-display text-white mb-3 pb-2 border-bottom border-secondary border-opacity-25 text-uppercase" style="letter-spacing: 1px;">
+                        Queued Items (@cart.TotalItemCount)
+                    </h5>
+
+                    <!-- Item previews -->
+                    <div class="d-flex flex-column gap-3 mb-4" style="max-height: 240px; overflow-y: auto;">
+                        @foreach (var item in cart.Items)
+                        {
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="glass-card p-1 text-center" style="width: 50px; height: 50px; border-radius: 8px; background: #0c0e17;">
+                                    <img src="@item.ProductImageUrl" alt="@item.ProductName" class="w-100 h-100 object-fit-contain" />
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="small text-white font-heading fw-bold text-truncate" style="max-width: 180px;">@item.ProductName</div>
+                                    <div class="small text-muted" style="font-size: 0.75rem;">Qty: @item.Quantity × $@item.UnitPrice.ToString("F2")</div>
+                                </div>
+                                <div class="font-display fw-bold text-cyan small">
+                                    $@item.TotalPrice.ToString("F2")
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="border-top border-secondary border-opacity-25 pt-3 mb-3">
+                        <div class="d-flex justify-content-between mb-2 small">
+                            <span class="text-secondary">Subtotal</span>
+                            <span class="text-white font-display fw-bold">$@cart.Subtotal.ToString("F2")</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 small">
+                            <span class="text-secondary">Shipping</span>
+                            @if (cart.ShippingEstimate == 0)
+                            {
+                                <span class="text-cyan font-heading fw-bold">FREE</span>
+                            }
+                            else
+                            {
+                                <span class="text-white font-display fw-bold">$@cart.ShippingEstimate.ToString("F2")</span>
+                            }
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 small">
+                            <span class="text-secondary">Tax (8%)</span>
+                            <span class="text-white font-display fw-bold">$@cart.TaxEstimate.ToString("F2")</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-baseline pt-2 border-top border-secondary border-opacity-25">
+                            <span class="font-heading fw-bold text-white">TOTAL PAYABLE</span>
+                            <span class="display-6 font-display fw-bold text-cyan">$@cart.Total.ToString("F2")</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-cyber-primary w-100 py-3 font-heading fw-bold text-uppercase d-flex align-items-center justify-content-center gap-2 mb-3">
+                        <i class="bi bi-lock-fill"></i> Authorize &amp; Beam Order
+                    </button>
+
+                    <div class="text-center small text-muted font-heading" style="font-size: 0.75rem;">
+                        <i class="bi bi-shield-check text-cyan me-1"></i> Order is guaranteed by the Marwan Hosny Store Sovereign Protocol.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

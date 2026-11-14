@@ -1,0 +1,275 @@
+@model ECommerce.Web.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Marwan Hosny Store - Official Futuristic Cyber Merchandise";
+}
+
+<!-- Hero Section -->
+<section class="hero-cyber">
+    <div class="hero-glow-blob hero-blob-1"></div>
+    <div class="hero-glow-blob hero-blob-2"></div>
+
+    <div class="container position-relative" style="z-index: 1;">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <div class="d-inline-flex align-items-center gap-2 mb-3 px-3 py-1 glass-panel border-cyan rounded-pill">
+                    <span class="badge bg-cyan text-dark fw-bold" style="font-size: 0.65rem; letter-spacing: 1px;">OFFICIAL MERCH</span>
+                    <span class="small font-heading text-cyan fw-bold">MARWAN HOSNY SIGNATURE COLLECTION</span>
+                </div>
+
+                <h1 class="hero-title">
+                    GEAR FOR THE <br />
+                    <span class="text-gradient-neon">DIGITAL ERA</span>
+                </h1>
+
+                <p class="lead text-secondary-cyber mb-4 fs-5" style="max-width: 600px;">
+                    The official signature merchandise store of Marwan Hosny. Heavyweight cyber streetwear, heat-activated ceramic reactors, and collector-grade metallic enamel emblems.
+                </p>
+
+                <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start mb-5">
+                    <a asp-controller="Catalog" asp-action="Index" class="btn btn-cyber-primary btn-lg px-4 d-flex align-items-center gap-2">
+                        <i class="bi bi-lightning-charge-fill"></i> Explore Artifacts
+                    </a>
+                    <a asp-controller="Catalog" asp-action="Index" asp-route-categorySlug="t-shirts" class="btn btn-cyber-outline btn-lg px-4 d-flex align-items-center gap-2">
+                        <i class="bi bi-tag-fill text-pink"></i> View Apparel
+                    </a>
+                </div>
+
+                <!-- Stats Strip -->
+                <div class="row g-3 pt-3 border-top border-secondary border-opacity-25 text-center text-lg-start">
+                    <div class="col-4">
+                        <div class="font-display fw-bold fs-4 text-white">280 <span class="text-cyan fs-6">GSM</span></div>
+                        <div class="small text-muted font-heading">Heavyweight Cotton</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="font-display fw-bold fs-4 text-white">100% <span class="text-purple fs-6">NFC</span></div>
+                        <div class="small text-muted font-heading">Authenticity Chip</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="font-display fw-bold fs-4 text-white">48H <span class="text-pink fs-6">DISPATCH</span></div>
+                        <div class="small text-muted font-heading">Orbital Shipping</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Feature Image Graphic -->
+            <div class="col-lg-5 text-center">
+                <div class="position-relative d-inline-block">
+                    <div class="glass-panel p-4" style="border-radius: 28px; border: 1px solid rgba(6, 182, 212, 0.4); box-shadow: 0 0 50px rgba(6, 182, 212, 0.2);">
+                        <img src="~/images/products/tshirt-samurai.svg" alt="Neon Samurai Cyber Tee" class="img-fluid" style="max-height: 420px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));" />
+                        
+                        <!-- Creator VIP Signature Card -->
+                        <div class="glass-panel p-3 text-start position-absolute bottom-0 start-50 translate-middle-x mb-2" 
+                             style="width: 90%; border: 1px solid rgba(6, 182, 212, 0.45); background: rgba(10, 14, 26, 0.88); backdrop-filter: blur(20px); border-radius: 20px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(6, 182, 212, 0.15);">
+                            <div class="d-flex align-items-center gap-3">
+                                <!-- Glowing Cyber Avatar -->
+                                <div class="position-relative flex-shrink-0">
+                                    <div style="padding: 2px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #a855f7); box-shadow: 0 0 18px rgba(6, 182, 212, 0.5);">
+                                        <img src="~/images/marwan-hosny.jpg" alt="Marwan Hosny" 
+                                             class="rounded-circle d-block" 
+                                             style="width: 120px; height: 120px; object-fit: cover; object-position: center 10%; border: 2px solid #0a0e1a;" />
+                                    </div>
+                                    <span class="position-absolute bottom-0 end-0 bg-success border border-dark rounded-circle" 
+                                          style="width: 13px; height: 13px; box-shadow: 0 0 10px #22c55e;" title="Creator Verified & Online"></span>
+                                </div>
+
+                                <!-- Creator Brand Details -->
+                                <div class="flex-grow-1 min-w-0">
+                                    <div class="d-flex align-items-center justify-content-between gap-1 mb-1">
+                                        <div class="fw-bold text-white font-heading d-flex align-items-center gap-1 text-truncate" style="font-size: 0.95rem;">
+                                            Marwan Hosny
+                                            <i class="bi bi-patch-check-fill text-cyan" title="Verified Creator" style="font-size: 0.9rem;"></i>
+                                        </div>
+                                        <span class="badge-cyber badge-cyber-purple py-0 px-2 flex-shrink-0" style="font-size: 0.65rem; letter-spacing: 0.5px;">FOUNDER</span>
+                                    </div>
+                                    <div class="text-cyan small font-mono fw-bold" style="font-size: 0.72rem; letter-spacing: 0.8px;">SIGNATURE COLLECTION</div>
+                                    <div class="text-secondary-cyber text-truncate" style="font-size: 0.72rem;">Official Exclusive Cyber Merch</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Category Showcase Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <span class="badge-cyber badge-cyber-cyan mb-2">CATEGORY NODES</span>
+                <h2 class="h3 font-display text-white mb-0">DISCOVER COLLECTIONS</h2>
+            </div>
+            <a asp-controller="Catalog" asp-action="Index" class="text-cyan font-heading fw-bold text-decoration-none d-none d-sm-inline-flex align-items-center gap-1">
+                View All Categories <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var cat in Model.Categories)
+            {
+                <div class="col-md-4">
+                    <a asp-controller="Catalog" asp-action="Index" asp-route-categorySlug="@cat.Slug" class="category-card h-100">
+                        <div class="category-icon-box">
+                            <i class="bi @(cat.IconClass ?? "bi-tag-fill")"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h3 class="h5 font-heading text-white fw-bold mb-0">@cat.Name</h3>
+                                <span class="badge-cyber badge-cyber-purple">@cat.ProductCount items</span>
+                            </div>
+                            <p class="small text-secondary mb-0 line-clamp-2" style="line-height: 1.5;">@cat.Description</p>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Featured Merchandise Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-end mb-4 gap-2">
+            <div>
+                <span class="badge-cyber badge-cyber-purple mb-2">PRIMARY INVENTORY</span>
+                <h2 class="h3 font-display text-white mb-0">FEATURED ARTIFACTS</h2>
+            </div>
+            <div class="d-flex gap-2">
+                <a asp-controller="Catalog" asp-action="Index" asp-route-SortBy="featured" class="btn btn-cyber-outline btn-sm">
+                    <i class="bi bi-stars me-1 text-cyan"></i> Most Popular
+                </a>
+                <a asp-controller="Catalog" asp-action="Index" class="btn btn-cyber-cyan btn-sm">
+                    Browse All Products
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var product in Model.FeaturedProducts)
+            {
+                <div class="col-xl-4 col-md-6">
+                    <div class="product-card">
+                        <!-- Badges -->
+                        <div class="position-absolute top-0 start-0 m-3 d-flex flex-column gap-1" style="z-index: 2;">
+                            @if (product.HasDiscount)
+                            {
+                                <span class="badge-cyber badge-cyber-red">-@product.DiscountPercentage% OFF</span>
+                            }
+                            @if (product.IsFeatured)
+                            {
+                                <span class="badge-cyber badge-cyber-purple"><i class="bi bi-lightning-charge-fill me-1"></i> TOP PICK</span>
+                            }
+                        </div>
+
+                        <!-- Image Wrap -->
+                        <a asp-controller="Catalog" asp-action="Details" asp-route-slug="@product.Slug" class="product-card-img-wrap text-decoration-none">
+                            <img src="@product.PrimaryImageUrl" alt="@product.Name" loading="lazy" />
+                        </a>
+
+                        <!-- Body -->
+                        <div class="product-card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="small text-cyan font-heading text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">
+                                    @product.CategoryName
+                                </span>
+                                <span class="small @(product.InStock ? "text-success" : "text-danger") font-heading" style="font-size: 0.75rem;">
+                                    <i class="bi @(product.InStock ? "bi-check-circle" : "bi-x-circle") me-1"></i>
+                                    @(product.InStock ? $"{product.StockQuantity} In Stock" : "Sold Out")
+                                </span>
+                            </div>
+
+                            <a asp-controller="Catalog" asp-action="Details" asp-route-slug="@product.Slug" class="product-card-title">
+                                @product.Name
+                            </a>
+
+                            <p class="small text-secondary mb-3" style="line-height: 1.5; height: 42px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                @product.ShortDescription
+                            </p>
+
+                            <div class="mt-auto pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="product-price-current">$@product.Price.ToString("F2")</span>
+                                    @if (product.HasDiscount)
+                                    {
+                                        <span class="product-price-original">$@product.OriginalPrice?.ToString("F2")</span>
+                                    }
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <a asp-controller="Catalog" asp-action="Details" asp-route-slug="@product.Slug" class="btn btn-cyber-outline btn-sm px-2" title="Inspect Specs">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    @if (product.InStock)
+                                    {
+                                        <button type="button" class="btn btn-cyber-primary btn-sm btn-quick-add-cart d-flex align-items-center gap-1" data-product-id="@product.Id">
+                                            <i class="bi bi-cart-plus-fill"></i> Add
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Brand Tech Stack & Lore Section -->
+<section class="py-5 my-4">
+    <div class="container">
+        <div class="glass-panel p-4 p-md-5 position-relative overflow-hidden" style="border: 1px solid rgba(168, 85, 247, 0.3);">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-6">
+                    <span class="badge-cyber badge-cyber-purple mb-3">CYBER FABRICATION STANDARDS</span>
+                    <h2 class="h2 font-display text-white mb-3">SYNTHETIC PRECISION &amp; QUANTUM INK</h2>
+                    <p class="text-secondary-cyber mb-4" style="line-height: 1.8;">
+                        Every piece in the Marwan Hosny Store collection is constructed using proprietary materials designed for resilience and aesthetic impact in low-light cyber environments:
+                    </p>
+
+                    <div class="d-flex flex-column gap-3 mb-4">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="p-2 glass-panel border-cyan text-cyan rounded-3">
+                                <i class="bi bi-threads fs-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="h6 font-heading text-white fw-bold mb-1">Carbon-Weave Combed Cotton</h3>
+                                <p class="small text-secondary mb-0">280GSM dense knit that resists shrinking, pilling, and environmental distortion.</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="p-2 glass-panel border-purple text-purple rounded-3">
+                                <i class="bi bi-palette fs-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="h6 font-heading text-white fw-bold mb-1">Thermochromic Nano-Glaze</h3>
+                                <p class="small text-secondary mb-0">Sub-micron crystals that transform ceramic mugs from obsidian black to glowing matrix schematic.</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="p-2 glass-panel border-pink text-pink rounded-3">
+                                <i class="bi bi-shield-shaded fs-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="h6 font-heading text-white fw-bold mb-1">Laser-Sintered Enamel Emblems</h3>
+                                <p class="small text-secondary mb-0">Hand-polished zinc-alloy with recessed black nickel and super-strong neodymium magnets.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a asp-controller="Home" asp-action="About" class="btn btn-cyber-outline">Read The Full Specification</a>
+                </div>
+
+                <div class="col-lg-6 text-center">
+                    <div class="p-4 d-inline-block">
+                        <img src="~/images/products/mug-matrix.svg" alt="CyberMatrix Thermal Mug" class="img-fluid" style="max-height: 380px; filter: drop-shadow(0 20px 40px rgba(0, 242, 254, 0.25));" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

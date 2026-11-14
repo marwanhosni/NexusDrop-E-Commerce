@@ -1,0 +1,108 @@
+@model IReadOnlyList<ECommerce.Application.DTOs.OrderDto>
+@{
+    ViewData["Title"] = "Order & Dispatch Operations";
+}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 border-bottom border-secondary border-opacity-25 gap-3">
+    <div>
+        <h1 class="h3 font-display text-white mb-1">
+            <i class="bi bi-cart-check-fill text-success me-2"></i>ORDER &amp; DISPATCH LOG
+        </h1>
+        <p class="text-secondary small mb-0">Track commercial fulfillment, update shipping status, and audit payments.</p>
+    </div>
+    <div>
+        <span class="badge-cyber badge-cyber-purple fs-6">@Model.Count Total Orders</span>
+    </div>
+</div>
+
+<div class="glass-panel p-4">
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5 text-muted">
+            <i class="bi bi-box2 fs-2 mb-2 d-block"></i>
+            No orders have been recorded in the system yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-cyber mb-0 align-middle">
+                <thead>
+                    <tr>
+                        <th>Order Reference</th>
+                        <th>Customer / Alias</th>
+                        <th>Order Date</th>
+                        <th class="text-center">Units</th>
+                        <th class="text-end">Total Amount</th>
+                        <th class="text-center">Payment</th>
+                        <th class="text-center">Fulfillment Status</th>
+                        <th class="text-end">Manage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="font-display fw-bold text-white small">@order.OrderNumber</span>
+                            </td>
+                            <td>
+                                <div class="text-white font-heading fw-bold small">@order.CustomerName</div>
+                                <div class="text-secondary" style="font-size: 0.75rem;">@order.CustomerEmail</div>
+                            </td>
+                            <td class="small text-secondary font-heading">
+                                @order.OrderDate.ToString("yyyy-MM-dd HH:mm")
+                            </td>
+                            <td class="text-center small text-white">
+                                @order.Items.Sum(i => i.Quantity)
+                            </td>
+                            <td class="text-end font-display fw-bold text-cyan small">
+                                $@order.TotalAmount.ToString("F2")
+                            </td>
+                            <td class="text-center">
+                                @if (order.PaymentStatus == ECommerce.Core.Enums.PaymentStatus.Paid)
+                                {
+                                    <span class="badge-cyber badge-cyber-green">PAID</span>
+                                }
+                                else if (order.PaymentStatus == ECommerce.Core.Enums.PaymentStatus.Pending)
+                                {
+                                    <span class="badge-cyber badge-cyber-purple">PENDING</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-cyber badge-cyber-red">FAILED</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @switch (order.Status)
+                                {
+                                    case ECommerce.Core.Enums.OrderStatus.Pending:
+                                        <span class="badge-cyber badge-cyber-purple">PENDING</span>
+                                        break;
+                                    case ECommerce.Core.Enums.OrderStatus.Processing:
+                                        <span class="badge-cyber badge-cyber-cyan">PROCESSING</span>
+                                        break;
+                                    case ECommerce.Core.Enums.OrderStatus.Shipped:
+                                        <span class="badge-cyber badge-cyber-green">SHIPPED</span>
+                                        break;
+                                    case ECommerce.Core.Enums.OrderStatus.Delivered:
+                                        <span class="badge-cyber badge-cyber-green">DELIVERED</span>
+                                        break;
+                                    case ECommerce.Core.Enums.OrderStatus.Cancelled:
+                                        <span class="badge-cyber badge-cyber-red">CANCELLED</span>
+                                        break;
+                                }
+                            </td>
+                            <td class="text-end">
+                                <a asp-area="Admin" asp-controller="Orders" asp-action="Details" asp-route-id="@order.Id" class="btn btn-cyber-outline btn-sm py-1 px-2" title="Inspect & Fulfill">
+                                    <i class="bi bi-eye me-1"></i> Fulfill
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+

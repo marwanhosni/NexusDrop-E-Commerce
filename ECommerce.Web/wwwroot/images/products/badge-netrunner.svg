@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#102533" />
+      <stop offset="100%" stop-color="#06090e" />
+    </radialGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <ellipse cx="300" cy="510" rx="160" ry="20" fill="none" stroke="url(#cyanGrad)" stroke-width="2" filter="url(#glow)"/>
+
+  <!-- Badge Pin Group -->
+  <g transform="translate(300, 290)">
+    <!-- Outer Shield / Hex Pin Metal Rim -->
+    <polygon points="0,-170 140,-85 140,85 0,170 -140,85 -140,-85" fill="#151a24" stroke="#2a3547" stroke-width="12"/>
+    <polygon points="0,-170 140,-85 140,85 0,170 -140,85 -140,-85" fill="none" stroke="url(#cyanGrad)" stroke-width="4" filter="url(#glow)"/>
+
+    <!-- Inner Recessed Enamel Surface -->
+    <polygon points="0,-145 120,-72 120,72 0,145 -120,72 -120,-72" fill="#0b0e14"/>
+
+    <!-- Cyber Skull / Netrunner Emblem -->
+    <g filter="url(#glow)">
+      <!-- Cybernetic Visor -->
+      <path d="M -60,-20 L 60,-20 L 45,15 L -45,15 Z" fill="#00f2fe"/>
+      <!-- Glowing Eyes inside Visor -->
+      <circle cx="-25" cy="-3" r="5" fill="#ffffff"/>
+      <circle cx="25" cy="-3" r="5" fill="#ffffff"/>
+
+      <!-- Cranium Geometry -->
+      <polygon points="0,-90 50,-40 50,-25 -50,-25 -50,-40" fill="none" stroke="url(#cyanGrad)" stroke-width="3"/>
+      <!-- Jaw / Teeth Grill -->
+      <polygon points="-35,25 35,25 25,65 -25,65" fill="#131924" stroke="#00f2fe" stroke-width="2"/>
+      <line x1="-15" y1="25" x2="-15" y2="55" stroke="#00f2fe" stroke-width="2"/>
+      <line x1="0" y1="25" x2="0" y2="60" stroke="#00f2fe" stroke-width="2"/>
+      <line x1="15" y1="25" x2="15" y2="55" stroke="#00f2fe" stroke-width="2"/>
+    </g>
+
+    <!-- Badge Inscription -->
+    <text x="0" y="105" text-anchor="middle" font-family="'Orbitron', monospace" font-size="12" font-weight="900" fill="#ffffff" letter-spacing="4">
+      NETRUNNER // TIER 4
+    </text>
+    <text x="0" y="122" text-anchor="middle" font-family="'Inter', sans-serif" font-size="8" font-weight="bold" fill="#00f2fe" letter-spacing="2">
+      CLASSIFIED ACCESS ONLY
+    </text>
+  </g>
+</svg>
+
