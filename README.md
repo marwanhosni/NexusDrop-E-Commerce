@@ -67,6 +67,6 @@ A production-ready, full-stack merchandise e-commerce web application built with
 
 ## 👤 Author
 **Marwan Hosni Ibrahim**  
-- LinkedIn: [Your Profile Link]  
-- GitHub: [Your Profile Link]  
-- Email: marwanhosny@example.com
+- LinkedIn: [https://www.linkedin.com/in/marwan-hosni-2a01072b7]  
+- GitHub: [https://github.com/marwanhosni]  
+- Email: marwanhosni785@gmail.com
