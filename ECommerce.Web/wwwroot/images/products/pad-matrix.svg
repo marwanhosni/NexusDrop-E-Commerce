@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#091b12" />
+      <stop offset="100%" stop-color="#040906" />
+    </radialGradient>
+    <linearGradient id="matrixGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <g transform="translate(60, 180)">
+    <polygon points="40,0 440,0 480,240 0,240" fill="#08100b" stroke="url(#matrixGreen)" stroke-width="3" filter="url(#glow)"/>
+    <!-- Matrix Terminal Rain Characters -->
+    <g font-family="'Courier New', monospace" font-size="12" fill="#10b981" font-weight="bold" opacity="0.8" filter="url(#glow)">
+      <text x="60" y="40">0 1 1 0 1 0 0 1</text>
+      <text x="60" y="65">1 0 0 1 0 1 1 0</text>
+      <text x="180" y="50">#include &lt;core.h&gt;</text>
+      <text x="180" y="80">void main() { init(); }</text>
+      <text x="320" y="40">SYSTEM // OK</text>
+      <text x="320" y="70">PING 0.04ms</text>
+      <text x="100" y="140">ACCESS_GRANTED [200]</text>
+    </g>
+    <text x="240" y="210" font-family="'Courier New', monospace" font-size="16" font-weight="900" fill="#10b981" text-anchor="middle" letter-spacing="6">MATRIX TERMINAL // EXTENDED</text>
+  </g>
+</svg>

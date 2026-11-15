@@ -46,6 +46,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Map attribute-routed API controllers for JWT Auth & REST endpoints
+app.MapControllers();
+
 // Initialize Database & Seed initial cyber merchandise
 using (var scope = app.Services.CreateScope())
 {

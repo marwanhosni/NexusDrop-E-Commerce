@@ -116,7 +116,7 @@ function initDemoAuthFill() {
         const passInput = document.getElementById('Input_Password') || document.querySelector('input[name="Password"]');
         if (emailInput && passInput) {
             emailInput.value = 'admin@marwanhosny.store';
-            passInput.value = 'Admin@2026!';
+            passInput.value = 'Admin@123456';
             showCyberToast('Admin credentials loaded!');
         }
     };
@@ -126,7 +126,7 @@ function initDemoAuthFill() {
         const passInput = document.getElementById('Input_Password') || document.querySelector('input[name="Password"]');
         if (emailInput && passInput) {
             emailInput.value = 'customer@marwanhosny.store';
-            passInput.value = 'Customer@2026!';
+            passInput.value = 'Customer@123456';
             showCyberToast('Customer credentials loaded!');
         }
     };
